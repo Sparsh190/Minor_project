@@ -3,7 +3,24 @@ const mongoose = require('mongoose');
 const QuestionSchema = new mongoose.Schema({
   question: {type: String, required:true},
   answer: {type: String, required:true},
-  options: {type: Object, required:true},
+  options: [
+    {
+      option: {type: String},
+      isCorrect: {type :Boolean}
+    },
+    {
+      option: {type: String},
+      isCorrect: {type :Boolean}
+    },
+    {
+      option: {type: String},
+      isCorrect: {type :Boolean}
+    },
+    {
+      option: {type: String},
+      isCorrect: {type :Boolean}
+    }
+  ],
   unit:{type: String, required:true},
   topic:{type: String, required:true},
   subject:{type: String, required:true},
