@@ -12,6 +12,42 @@ export async function GET() {
     return NextResponse.json({error}, {status: 400})
   }
 }
+// export async function POST(req, res) {
+//   // Ensure that the database is connected
+//   await dbConnect();
+
+//   if (req.method === 'POST') {
+//     try {
+//       // Parse the JSON request body
+//       const requestData = await req.json();
+
+//       // Extract data from the parsed request body
+//       const { question, answer, options, unit, topic, subject } = requestData;
+
+//       // Create a new question object
+//       const newQuestion = new Question({
+//         question,
+//         answer,
+//         options,
+//         unit,
+//         topic,
+//         subject
+//       });
+
+//       // Save the new question to the database
+//       await newQuestion.save();
+//       console.log(newQuestion)
+//       // Return a success message in the response
+//       return NextResponse.json({ message: 'Question added successfully' },{status: 201});
+//     } catch (error) {
+//       // If an error occurs, return the error in the response
+//       return NextResponse.json({ error: error.message },{status: 400});
+//     }
+//   } else {
+//     // If the request method is not POST, return a method not allowed error
+//     return NextResponse.json({ message: 'Method Not Allowed' },{status: 500});
+//   }
+// }
 export async function POST(req, res) {
   // Ensure that the database is connected
   await dbConnect();
@@ -21,30 +57,48 @@ export async function POST(req, res) {
       // Parse the JSON request body
       const requestData = await req.json();
 
-      // Extract data from the parsed request body
-      const { question, answer, options, unit, topic, subject } = requestData;
+      // Check if the 'questions' array exists in the request body
+      if (!requestData.hasOwnProperty('questions')) {
+        return NextResponse.json({ error: "Questions array not found in request body" }, { status: 400 });
+      }
 
-      // Create a new question object
-      const newQuestion = new Question({
-        question,
-        answer,
-        options,
-        unit,
-        topic,
-        subject
+      // Extract the 'questions' array from the request body
+      const questionsData = requestData.questions;
+
+      // Create an array to hold the new question objects
+      const newQuestions = [];
+
+      // Iterate over each question data
+      questionsData.forEach(questionData => {
+        // Extract data for each question
+        const { question, answer, options, unit, topic, subject } = questionData;
+
+        // Create a new question object
+        const newQuestion = {
+          question,
+          answer,
+          options,
+          unit,
+          topic,
+          subject
+        };
+
+        // Push the new question object to the array
+        newQuestions.push(newQuestion);
       });
 
-      // Save the new question to the database
-      await newQuestion.save();
-      console.log(newQuestion)
+      // Insert all new questions to the database
+      await Question.insertMany(newQuestions);
+
       // Return a success message in the response
-      return NextResponse.json({ message: 'Question added successfully' },{status: 201});
+      return NextResponse.json({ message: 'Questions added successfully' }, { status: 201 });
     } catch (error) {
       // If an error occurs, return the error in the response
-      return NextResponse.json({ error: error.message },{status: 400});
+      return NextResponse.json({ error: error.message }, { status: 400 });
     }
   } else {
     // If the request method is not POST, return a method not allowed error
-    return NextResponse.json({ message: 'Method Not Allowed' },{status: 500});
+    return NextResponse.json({ message: 'Method Not Allowed' }, { status: 500 });
   }
 }
+
