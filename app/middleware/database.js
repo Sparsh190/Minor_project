@@ -6,7 +6,7 @@ const functionn = ()=>{
 }
 
 const connnectToMongoDB = ()=>{
-    connect('mongodb://127.0.0.1:27017/quiz',functionn())
+    connect('mongodb+srv://sudhanshu250403:mongoDBatlas@cluster0.zajcgga.mongodb.net/quiz',functionn())
 }
 export default connnectToMongoDB;
 
