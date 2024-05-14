@@ -1,29 +1,100 @@
 'use client';
 import React, { useEffect, useState } from 'react';
-import QuizSubmit from '../components/quizSubmit';
-import QuizTimer from '../components/QuizTimer';
+import QuizSubmit from '../../components/quizSubmit';
+import QuizTimer from '../../components/QuizTimer';
+import { useRouter } from 'next/navigation';
 
-function page() {
+function page({params}) {
   const [questions, setQuestions] = useState([]);
   const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
   const [userAnswers, setUserAnswers] = useState([]);
   const [score, setScore] = useState(0);
-
+  const router = useRouter();
+  const quizId = params.quizId;
+  const [username, setUsername] = useState('Anonymous');
   useEffect(() => {
     const fetchQuestions = async () => {
       try {
-        const response = await fetch('http://localhost:3000/api/question');
+        const response = await fetch('http://localhost:3000/api/question', {
+          method: 'POST',
+          headers: {
+              'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({
+              quizId: quizId,
+          }),
+      });
         if (!response.ok) {
           throw new Error('Network response was not ok');
         }
         const ques = await response.json();
         setQuestions(ques.question);
+        saveQuiz(ques.question);
       } catch (error) {
         console.error('There was a problem with the fetch operation:', error);
       }
     };
+    const saveQuiz = async(questions)=>{
+      await fetch('http://localhost:3000/api/quiz', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          quizId: quizId,
+          question: questions,
+        }),
+      })
+      .then(response => {
+        return response.json();
+      })
+      .catch(error => {
+        console.error('Error saving quiz data:', error);
+      });
+    }
     fetchQuestions();
+    sessionStorage.setItem('quizId', quizId);
+  
+    if(localStorage.getItem('username')){
+      setUsername(localStorage.getItem('username'));
+    }
+
   }, []);
+
+  
+
+  const handleSubmit = async() => {
+    const quizResultData = {
+      quizId: quizId,
+      username: username,
+      questions: questions,
+      userAnswers: userAnswers,
+    };
+
+
+    await fetch('http://localhost:3000/api/result', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        quizId: quizResultData.quizId,
+        username: quizResultData.username,
+        questions: quizResultData.questions,
+        userAnswers: quizResultData.userAnswers,
+      }),
+    })
+    .then(response => {
+      return response.json();
+    })
+    .then(data => {
+      console.log('Quiz result stored successfully:', data);
+    })
+    .catch(error => {
+      console.error('Error storing quiz result:', error);
+    });
+    router.push(`/result/${quizId}/${username}`)
+  };
 
   const handleNextQuestion = () => {
     if (questions.length > 0) {
@@ -111,7 +182,7 @@ function page() {
           <button onClick={handleNextQuestion} className="border py-2 px-4 rounded-lg hover:bg-white hover:text-black">Next</button>
           )}
           {currentQuestionIndex === questions.length - 1 && (
-            <button onClick={handleNextQuestion} className="border py-2 px-4 rounded-lg hover:bg-white hover:text-black">Finish</button>
+            <button onClick={handleSubmit} className="border py-2 px-4 rounded-lg hover:bg-white hover:text-black">Submit</button>
           )}
         </div>}
         {currentQuestionIndex === questions.length && <QuizSubmit score={score} totalQuestions={questions.length} questions={questions} userAnswers={userAnswers}/>}

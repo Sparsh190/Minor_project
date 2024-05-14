@@ -18,7 +18,7 @@ const SignInForm = () => {
     e.preventDefault();
     console.log("Form submitted");
   };
-  return (
+  return (<>
     <div className="max-w-md w-full mx-auto border bordedr-white rounded-none md:rounded-2xl p-4 md:p-8 shadow-input bg-black">
       <h2 className="font-bold text-xl text-neutral-800 dark:text-neutral-200">
         Welcome to QuizCrafters
@@ -55,6 +55,7 @@ const SignInForm = () => {
         </div>
       </form>
     </div>
+  </>
   );
 }
 
