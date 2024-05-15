@@ -2,6 +2,9 @@ import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import "./globals.css";
 const inter = Inter({ subsets: ["latin"] });
+import Header from '@/app/components/navbar.js'
+import Footer from '@/app/components/footer.js'
+
 
 export const metadata: Metadata = {
   title: "QuizCrafters",
@@ -16,7 +19,10 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={inter.className}>
+
+        <Header/>
         {children}
+        <Footer/>
       </body>
     </html>
   );

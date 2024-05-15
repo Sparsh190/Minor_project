@@ -2,6 +2,7 @@
 import React from 'react'
 import { useRouter } from 'next/navigation';
 
+
 function page() {
   const router = useRouter();
   const generateQuizId = ()=> {
@@ -22,6 +23,7 @@ function page() {
     // Save the quizId to the database
   }
   return (
+  
     <div className='container min-h-screen flex items-center justify-evenly ml-auto'>
       <div className="w-auto bg-gray-800 bg-opacity-50 rounded-lg p-8 mt-10 md:mt-0">
       <h2 className="text-white w-full text-center text-lg font-medium title-font mb-5">QuizCrafters - Quiz App</h2>
