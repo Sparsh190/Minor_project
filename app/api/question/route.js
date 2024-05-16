@@ -7,7 +7,7 @@ export async function POST(req, res) {
   await dbConnect();
   try {
     const requestData = await req.json();
-    const { subject, unit, topic, difficulty, ques } = requestData;
+    const { subject, unit, difficulty, ques } = requestData;
 
     console.log("Request Data:", requestData);
 
@@ -18,11 +18,9 @@ export async function POST(req, res) {
     } else {
       // Construct aggregation pipeline based on subject, unit, topic, and difficulty
       const pipeline = [
-        { $match: { subject: subject, unit: unit, topic: topic, difficulty: difficulty } },
+        { $match: { subject: subject, unit: unit, difficulty: difficulty } },
         { $sample: { size: parseInt(ques) } }
       ];
-
-      console.log("Aggregation Pipeline:", JSON.stringify(pipeline));
 
       // Execute aggregation pipeline
       const questions = await Question.aggregate(pipeline);

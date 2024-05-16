@@ -24,17 +24,16 @@ export async function POST(req, res) {
       // Iterate over each question data
       for (const filterData of requestData.questions) {
         // Extract data for each question
-        const { unit, topic, subject } = filterData;
+        const { unit, subject } = filterData;
       
         // Create a new question object
         const filter = {
           unit,
-          topic,
           subject
         };
       
         // Check if the filter already exists in the database
-        const exists = await Filter.findOne({ unit: filter.unit, topic: filter.topic, subject: filter.subject });
+        const exists = await Filter.findOne({ unit: filter.unit, subject: filter.subject });
       
         // If the filter does not exist, push it to the newFilter array
         if (!exists) {
