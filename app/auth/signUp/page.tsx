@@ -3,13 +3,12 @@ import React from "react";
 import { Label } from "@/app/components/ui/label";
 import { Input } from "@/app/components/ui/input";
 import { cn } from "@/assets/utils/cn";
-import { WavyBackground } from "@/app/components/ui/wavy-background";
 
 export default function page() {
     return (
-    <WavyBackground className="container mx-auto flex justify-center items-center h-screen">
-        <SignUpForm />
-    </WavyBackground>
+      <div className="w-full mx-auto flex justify-center items-center h-screen z-10 bg-contain bg-no-repeat bg-opacity-50" style={{background:`url('../quiz_bg.jpg')`}}>
+      <SignUpForm />
+  </div>
     );
 }
 
@@ -19,7 +18,7 @@ const SignUpForm = () => {
     console.log("Form submitted");
   };
   return (
-    <div className="max-w-md w-full mx-auto border bordedr-white rounded-none md:rounded-2xl p-4 md:p-8 shadow-input bg-black">
+    <div className="max-w-md w-full mx-auto border border-white rounded-2xl p-8 shadow-input bg-black bg-opacity-80 backdrop-blur-sm">
       <h2 className="font-bold text-xl text-neutral-800 dark:text-neutral-200">
         Welcome to QuizCrafters
       </h2>

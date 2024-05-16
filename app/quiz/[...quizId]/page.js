@@ -10,7 +10,13 @@ function page({params}) {
   const [userAnswers, setUserAnswers] = useState([]);
   const [score, setScore] = useState(0);
   const router = useRouter();
-  const quizId = params.quizId;
+  const quizId = params.quizId[0];
+  const question = parseInt(params.quizId[1]);
+  const subject = sessionStorage .getItem('subject');
+  const difficulty = sessionStorage.getItem('difficulty');
+  const topic = sessionStorage .getItem('topic');
+  const unit = sessionStorage.getItem('unit');
+
   const [username, setUsername] = useState('Anonymous');
   useEffect(() => {
     const fetchQuestions = async () => {
@@ -22,6 +28,11 @@ function page({params}) {
           },
           body: JSON.stringify({
               quizId: quizId,
+              subject: subject,
+              difficulty: difficulty,
+              ques:question,
+              topic: topic,
+              unit: unit,
           }),
       });
         if (!response.ok) {
@@ -29,6 +40,7 @@ function page({params}) {
         }
         const ques = await response.json();
         setQuestions(ques.question);
+        console.log(ques)
         saveQuiz(ques.question);
       } catch (error) {
         console.error('There was a problem with the fetch operation:', error);
@@ -132,13 +144,13 @@ function page({params}) {
   useEffect(() => {
     calculateScore();
   }, [userAnswers]);
-
-  const currentQuestion = questions[currentQuestionIndex];
+    const currentQuestion = questions[currentQuestionIndex];
 
   return (
     <div className='container mx-auto'>
+      <hr />
       <h1 className='text-5xl my-6 text-center font-black'>
-        Quiz Crafters
+        Quiz Crafters - {quizId}
       </h1>
       <hr />
       {(questions.length === 0) && <h1 className='text-white my-2 text-2xl text-center font-semibold'>Fetching Questions...</h1>}

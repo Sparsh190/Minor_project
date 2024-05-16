@@ -21,6 +21,7 @@ const QuestionSchema = new mongoose.Schema({
       isCorrect: {type :Boolean}
     }
   ],
+  difficulty:{type: String, default: "Easy"},
   unit:{type: String, required:true},
   topic:{type: String, required:true},
   subject:{type: String, required:true},

@@ -1,26 +1,39 @@
 import Question from "@/app/models/Question";
 import Quiz from "@/app/models/Quiz";
-import { NextResponse} from 'next/server'
+import { NextResponse } from 'next/server';
 import dbConnect from '@/app/middleware/database';
 
-export async function POST(req,res) {
-  dbConnect();
-  try{
+export async function POST(req, res) {
+  await dbConnect();
+  try {
     const requestData = await req.json();
+    const { subject, unit, topic, difficulty, ques } = requestData;
+
+    console.log("Request Data:", requestData);
+
+    // Check if quiz with the same quizId exists
     const existingQuiz = await Quiz.findOne({ quizId: requestData.quizId });
-    if(existingQuiz){
-      return NextResponse.json(existingQuiz, {status: 200})
-    }
-    else{
+    if (existingQuiz) {
+      return NextResponse.json(existingQuiz, { status: 200 });
+    } else {
+      // Construct aggregation pipeline based on subject, unit, topic, and difficulty
       const pipeline = [
-        { $sample: { size: 5} }
+        { $match: { subject: subject, unit: unit, topic: topic, difficulty: difficulty } },
+        { $sample: { size: parseInt(ques) } }
       ];
-      let question = await Question.aggregate(pipeline);
-      return NextResponse.json({question}, {status: 200})
+
+      console.log("Aggregation Pipeline:", JSON.stringify(pipeline));
+
+      // Execute aggregation pipeline
+      const questions = await Question.aggregate(pipeline);
+
+      console.log("Sampled Questions:", questions);
+
+      // Return sampled questions
+      return NextResponse.json( {question:questions} , { status: 200 });
     }
-  }
-  catch(error){
-    return NextResponse.json({error}, {status: 400})
+  } catch (error) {
+    console.error('Error processing request:', error);
+    return NextResponse.json({ error: 'Internal server error' }, { status: 500 });
   }
 }
-

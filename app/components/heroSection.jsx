@@ -40,7 +40,7 @@ export default function VortexDemo() {
     console.log(quizId);
   }
   return (
-    <div className="w-full rounded-md  h-[80vh] overflow-hidden">
+    <div className="w-full rounded-md h-[80vh] overflow-hidden">
       <Vortex
         backgroundColor="black"
         rangeY={800}
