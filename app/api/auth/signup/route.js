@@ -14,14 +14,14 @@ export async function POST(req, res) {
       // Check if the username or email already exists
       const existingUser = await User.findOne({ $or: [{ username }, { email }] });
       if (existingUser) {
-        return NextResponse.json({ error: 'Username or email already exists' }, { status: 400 });
+        return NextResponse.json({ success: false }, { status: 201 });
       }
 
       // Create a new user
       const newUser = new User({ username, email, password });
       await newUser.save();
 
-      return NextResponse.json({ message: 'User registered successfully' }, { status: 201 });
+      return NextResponse.json({ success: true }, { status: 201 });
     } catch (error) {
       return NextResponse.json({ error: error.message }, { status: 400 });
     }
