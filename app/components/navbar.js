@@ -12,11 +12,20 @@ export default function Header() {
       </svg>
       <span className=" text-white ml-3 text-xl font-black">Quiz Crafter</span>
     </a>
-    <button className=" text-black inline-flex items-center bg-gray-100 border-0 py-1 px-3 focus:outline-none hover:bg-gray-200 rounded text-base mt-4 md:mt-0">
+
+    {(typeof window !== 'undefined') && !localStorage.getItem('username') &&
+      <button className=" text-black inline-flex items-center bg-gray-100 border-0 py-1 px-3 focus:outline-none hover:bg-gray-200 rounded text-base mt-4 md:mt-0">
       <a href="/auth/signIn">
         Login &rarr;
       </a>
-    </button>
+    </button>}
+            
+    {(typeof window !== 'undefined') && localStorage.getItem('username') &&
+      <button className=" text-black inline-flex items-center bg-gray-100 border-0 py-1 px-3 focus:outline-none hover:bg-gray-200 rounded text-base mt-4 md:mt-0">
+      <a href="/report">
+        Profile &rarr;
+      </a>
+    </button>}
   </div>
 </header>
 </div>

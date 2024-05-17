@@ -2,7 +2,7 @@
 import React,{useEffect, useState} from 'react'
 import QuizSubmit from '@/app/components/quizSubmit';
 
-function page({params}: {params: any}) {
+function Page({params}: {params: any}) {
     const quizId = params.data[0];
     const username = params.data[1];
     const [quizResult, setQuizResult] = useState(null);
@@ -48,4 +48,4 @@ function page({params}: {params: any}) {
     )
 }
 
-export default page
+export default Page

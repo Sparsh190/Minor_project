@@ -2,6 +2,7 @@
 import React,{useState} from "react";
 import { Vortex } from "@/app/components/ui/vortex";
 import { useRouter } from "next/navigation";
+
 export default function VortexDemo() {
   const [quizId, setQuizId] = useState();
   const [showError, setShowError] = useState(false);
@@ -51,7 +52,7 @@ export default function VortexDemo() {
         QuizUp Your Life: Where Knowledge Meets Excitement!
         </h2>
         <p className="text-white text-sm md:text-2xl max-w-xl mt-6 text-center">
-        "Embark on an Adventure of Knowledge : Explore, Learn, and Conquer with Our Dynamic Quiz Application!"
+        Embark on an Adventure of Knowledge : Explore, Learn, and Conquer with Our Dynamic Quiz Application!
         </p>
         <div className="flex flex-col sm:flex-row items-center gap-4 mt-6">
           <a href="/generateQuiz">

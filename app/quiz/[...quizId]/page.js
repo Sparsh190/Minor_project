@@ -4,7 +4,7 @@ import QuizSubmit from '../../components/quizSubmit';
 import QuizTimer from '../../components/QuizTimer';
 import { useRouter } from 'next/navigation';
 
-function page({params}) {
+function Page({params}) {
   const [questions, setQuestions] = useState([]);
   const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
   const [userAnswers, setUserAnswers] = useState([]);
@@ -203,4 +203,4 @@ function page({params}) {
   );
 }
 
-export default page;
+export default Page;

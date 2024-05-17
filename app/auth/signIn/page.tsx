@@ -4,7 +4,7 @@ import { Label } from "@/app/components/ui/label";
 import { Input } from "@/app/components/ui/input";
 import { cn } from "@/assets/utils/cn";
 import { useRouter } from "next/navigation";
-export default function page() {
+export default function Page() {
   const router = useRouter();
     useEffect(() => {
         if(localStorage.getItem('username')){
@@ -40,7 +40,9 @@ const SignInForm = () => {
         if(success.success){
           alert(success.success);
           router.push('/generateQuiz');
-          localStorage.setItem('username', email);
+          if (typeof window !== 'undefined') {
+            localStorage.setItem('username', email);
+          }
         }else{
           alert("Enter valid credentials")
         }

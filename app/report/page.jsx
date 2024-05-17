@@ -1,6 +1,6 @@
 import React from 'react'
 
-function page() {
+function Page() {
   return (
     <div className='w-screen min-h-screen'>
       <div className="text-center mt-20">
@@ -51,4 +51,4 @@ function page() {
   )
 }
 
-export default page
+export default Page

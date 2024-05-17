@@ -1,6 +1,6 @@
 import React from 'react'
 
-function page() {
+function Page() {
   return (
     <div>
       <section className="text-gray-400 min-h-screen body-font">
@@ -106,4 +106,4 @@ function page() {
   )
 }
 
-export default page
+export default Page

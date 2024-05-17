@@ -3,7 +3,7 @@ import React,{useState, useEffect} from 'react'
 import { useRouter } from 'next/navigation';
 
 
-function page() {
+function Page() {
   const router = useRouter();
   const [userSubject, setUserSubject] = useState('');
   const [userTopic, setUserTopic] = useState('');
@@ -62,10 +62,12 @@ function page() {
   const handleGenerate = ()=>{
     const quizId = generateQuizId();
     console.log(quizId);
-    sessionStorage.setItem('subject', userSubject);
-    sessionStorage.setItem('topic', userTopic);
-    sessionStorage.setItem('unit', userUnit);
-    sessionStorage.setItem('difficulty', userDifficulty);
+    if (typeof window !== 'undefined') { 
+      sessionStorage.setItem('subject', userSubject);
+      sessionStorage.setItem('topic', userTopic);
+      sessionStorage.setItem('unit', userUnit);
+      sessionStorage.setItem('difficulty', userDifficulty);
+    }
     router.push(`/quiz/${quizId}/${questions}`);
     // Save the quizId to the database
   }
@@ -82,7 +84,7 @@ function page() {
           {
             choices.map((choice, index) => {
               return (<option className='bg-gray-600 py-2' key={index} value={choice.topic} data-topic={choice.topic} data-unit={choice.unit} data-subject={choice.subject}>
-            {choice.topic}, {choice.unit}, {choice.subject}
+            {choice.topic}{choice.unit}, {choice.subject}
           </option>)
             })
           }
@@ -123,4 +125,4 @@ function page() {
   )
 }
 
-export default page
+export default Page
