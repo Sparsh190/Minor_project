@@ -166,7 +166,7 @@ function page({params}) {
             </div>
             <div className="flex flex-col">
               <h3 className='text-lg font-semibold'>Username : Anonymous</h3>
-              <QuizTimer timeLimit={300} onTimeUp={handleTimeUp}/>
+              <QuizTimer timeLimit={150*questions.length} onTimeUp={handleTimeUp}/>
             </div>
           </div>
             <h1 className='text-white text-2xl font-semibold'>Q{currentQuestionIndex + 1}. {currentQuestion.question}</h1>
