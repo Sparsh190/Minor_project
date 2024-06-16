@@ -32,7 +32,7 @@ function Page({params}: {params: any}) {
     }, []);
     
     return (
-        <div className='w-full flex flex-col justify-center px-auto'>
+        <div className='w-full min-h-screen flex flex-col justify-center px-auto'>
             <h2 className='text-center text-2xl w-full font-black my-4'>Quiz Result Details</h2>
             {quizResult && (
                 <div className='w-[90%] mx-auto'>
