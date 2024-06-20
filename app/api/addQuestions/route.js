@@ -13,11 +13,13 @@ export async function POST(req, res) {
       const requestData = await req.json();
 
       // Check if the 'questions' array exists in the request body
+
       if (!requestData.hasOwnProperty('questions')) {
         return NextResponse.json({ error: "Questions array not found in request body" }, { status: 400 });
       }
 
       // Extract the 'questions' array from the request body
+      
       const questionsData = requestData.questions;
 
       // Create an array to hold the new question objects

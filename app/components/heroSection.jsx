@@ -56,9 +56,9 @@ export default function VortexDemo() {
         </p>
         <div className="flex flex-col sm:flex-row items-center gap-4 mt-6">
           <a href="/generateQuiz">
-            <button className="px-4 py-2 bg-orange-600 hover:bg-orange-700 transition duration-200 rounded-lg text-white shadow-[0px_2px_0px_0px_#FFFFFF40_inset]">
+            <div className="px-4 py-2 bg-orange-600 hover:bg-orange-700 transition duration-200 rounded-lg text-white shadow-[0px_2px_0px_0px_#FFFFFF40_inset]">
               Start new Quiz
-            </button>
+            </div>
           </a>
         </div>
         <form className="relative m-4 flex" onSubmit={handleSubmit}>
